@@ -13,9 +13,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 public class splashActivity extends AppCompatActivity {
 
     TextView tvtitle;
+    LottieAnimationView lottieAnimationView;
 
     Animation animtranslate;
 
@@ -25,9 +28,10 @@ public class splashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         tvtitle = findViewById(R.id.tvSplash);
+        lottieAnimationView =  findViewById(R.id.laLoginLogo);
 
         animtranslate = AnimationUtils.loadAnimation(splashActivity.this,R.anim.toptobottomtranslate);
-        tvtitle.startAnimation(animtranslate);
+        lottieAnimationView.startAnimation(animtranslate);
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -37,7 +41,7 @@ public class splashActivity extends AppCompatActivity {
                 startActivity(i);
 
             }
-        } ,4000);
+        },5000);
 
 
 
