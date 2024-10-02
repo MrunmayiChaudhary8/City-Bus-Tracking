@@ -78,6 +78,7 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="225dp"
                 android:layout_height="wrap_content"
+                android:id="@+id/BtnLogin"
                 android:layout_gravity="center"
                 android:background="@drawable/etshape"
                 android:fontFamily="sans-serif-condensed-medium"

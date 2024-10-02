@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.etUsernameLogin);
         etPassword = findViewById(R.id.etPasswordLogin);
         cbShowHidePassword =findViewById(R.id.cbcheckanduncheckactivity);
-        btnLogin = findViewById(R.id.btnuserlogin);
+        btnLogin = findViewById(R.id.BtnLogin);
         tvSignin = findViewById(R.id.tvSingup);
 
         cbShowHidePassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
