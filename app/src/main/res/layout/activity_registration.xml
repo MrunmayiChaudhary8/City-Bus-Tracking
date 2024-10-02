@@ -1,46 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegistrationActivity"
-    >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="868dp"
-            android:layout_height="1545dp"
-            android:layout_margin="16sp"
-            app:cardBackgroundColor="@color/material_dynamic_neutral70"
-            app:cardCornerRadius="24sp"
-            app:cardElevation="24sp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/login_background">
 
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/laLoginLogo"
-                    android:layout_width="250sp"
-                    android:layout_height="250dp"
+                    android:layout_width="200sp"
+                    android:layout_height="200dp"
                     android:layout_gravity="center_horizontal"
                     app:lottie_autoPlay="true"
                     app:lottie_loop="true"
                     app:lottie_rawRes="@raw/logo"/>
-                <TextView
+        <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="cursive"
                     android:text="Register Here"
                     android:textAlignment="center"
-                    android:textColor="@color/material_dynamic_neutral60"
-                    android:textSize="29sp"
+                    android:textColor="@color/black"
+                    android:textSize="30sp"
                     android:textStyle="italic|bold" />
 
                 <EditText
@@ -48,76 +32,85 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_margin="16sp"
-                    android:fontFamily="casual"
+                    android:fontFamily="sans-serif-condensed-medium"
                     android:hint="Name"
                     android:inputType="textPersonName"
-                    android:textColor="@color/material_dynamic_primary80"
+                    android:textColor="@color/black"
                     android:textColorHint="@color/material_dynamic_primary40"
                     android:textSize="19sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:background="@drawable/etshape"
+                    android:padding="16dp"
+                    />
 
-                <EditText
-                    android:id="@+id/etRegisterMobileNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_margin="16sp"
-                    android:fontFamily="casual"
-                    android:hint="Mobile Number"
-                    android:inputType="number"
-                    android:textColor="@color/material_dynamic_primary80"
-                    android:textColorHint="@color/material_dynamic_primary40"
-                    android:textSize="19sp"
-                    android:textStyle="bold" />
+        <EditText
+            android:id="@+id/etRegisterMobileNumber"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="16sp"
+            android:background="@drawable/etshape"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:hint="Mobile Number"
+            android:inputType="number"
+            android:padding="16dp"
+            android:textColor="@color/material_dynamic_primary80"
+            android:textColorHint="@color/material_dynamic_primary40"
+            android:textSize="19sp"
+            android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/etRegisterEmailID"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_margin="16sp"
-                    android:fontFamily="casual"
-                    android:hint="Email ID"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/material_dynamic_primary80"
-                    android:textColorHint="@color/material_dynamic_primary40"
-                    android:textSize="19sp"
-                    android:textStyle="bold" />
+        <EditText
+            android:id="@+id/etRegisterEmailID"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="16sp"
+            android:background="@drawable/etshape"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:hint="Email ID"
+            android:inputType="textEmailAddress"
+            android:padding="16dp"
+            android:textColor="@color/material_dynamic_primary80"
+            android:textColorHint="@color/material_dynamic_primary40"
+            android:textSize="19sp"
+            android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/etRegisterUserName"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_margin="16sp"
-                    android:fontFamily="casual"
-                    android:hint="UserName"
-                    android:inputType="text"
-                    android:textColor="@color/material_dynamic_primary80"
-                    android:textColorHint="@color/material_dynamic_primary40"
-                    android:textSize="19sp"
-                    android:textStyle="bold" />
+        <EditText
+            android:id="@+id/etRegisterUserName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="16sp"
+            android:background="@drawable/etshape"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:hint="UserName"
+            android:inputType="text"
+            android:padding="16dp"
+            android:textColor="@color/material_dynamic_primary80"
+            android:textColorHint="@color/material_dynamic_primary40"
+            android:textSize="19sp"
+            android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/etRegisterPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_margin="16sp"
-                    android:fontFamily="casual"
-                    android:hint="Password"
-                    android:inputType="textPassword"
-                    android:textColor="@color/material_dynamic_primary80"
-                    android:textColorHint="@color/material_dynamic_primary40"
-                    android:textSize="19sp" />
+        <EditText
+            android:id="@+id/etRegisterPassword"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="16sp"
+            android:background="@drawable/etshape"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="16dp"
+            android:textColor="@color/material_dynamic_primary80"
+            android:textColorHint="@color/material_dynamic_primary40"
+            android:textSize="19sp" />
 
-                <androidx.appcompat.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnRegisterRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="50dp"
-                    android:background="@color/material_dynamic_neutral70"
+                    android:background="@drawable/etshape"
                     android:text="Register"
                     android:textColor="@color/darcula"
+                    android:layout_margin="16dp"
                     android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
-    </LinearLayout>
-    </ScrollView>
+
