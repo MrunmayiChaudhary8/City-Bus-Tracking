@@ -67,11 +67,11 @@ public class RegistrationActivity extends Activity {
                     etPassword.setError("UserName Must BE Greater Than 8");
                 }else {
                     Intent intent = new Intent(RegistrationActivity.this,LoginActivity.class);
-                    editor.putString("Name",etName.getText().toString()).commit();
-                    editor.putString("MobileNo",etMobileNumber.getText().toString()).commit();
-                    editor.putString("EmailId",etEmailID.getText().toString()).commit();
-                    editor.putString("UserName",etUserName.getText().toString()).commit();
-                    editor.putString("Password",etPassword.getText().toString()).commit();
+                    editor.putString("name",etName.getText().toString()).commit();
+                    editor.putString("mobileno",etMobileNumber.getText().toString()).commit();
+                    editor.putString("emailid",etEmailID.getText().toString()).commit();
+                    editor.putString("username",etUserName.getText().toString()).commit();
+                    editor.putString("password",etPassword.getText().toString()).commit();
                     Toast.makeText(RegistrationActivity.this, "Registration Successfully Done", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
 
