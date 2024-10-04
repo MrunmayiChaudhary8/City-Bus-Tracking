@@ -1,6 +1,7 @@
 package com.example.citybustracking;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,12 +11,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
+
 public class RegistrationActivity extends Activity {
     EditText etName,etMobileNumber,etEmailID,etUserName,etPassword;
     Button btnRegister;
 
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
+    ProgressDialog progressDialog;
 
 
     @Override
@@ -66,22 +77,68 @@ public class RegistrationActivity extends Activity {
                 } else if (etPassword.getText().toString().length() < 8) {
                     etPassword.setError("UserName Must BE Greater Than 8");
                 }else {
-                    Intent intent = new Intent(RegistrationActivity.this,LoginActivity.class);
-                    editor.putString("name",etName.getText().toString()).commit();
-                    editor.putString("mobileno",etMobileNumber.getText().toString()).commit();
-                    editor.putString("emailid",etEmailID.getText().toString()).commit();
-                    editor.putString("username",etUserName.getText().toString()).commit();
-                    editor.putString("password",etPassword.getText().toString()).commit();
-                    Toast.makeText(RegistrationActivity.this, "Registration Successfully Done", Toast.LENGTH_SHORT).show();
-                    startActivity(intent);
+                    progressDialog = new ProgressDialog(RegistrationActivity.this);
+                    progressDialog.setTitle("Please Wait .....");
+                    progressDialog.setMessage("SignUp In Process");
+                    progressDialog.setCanceledOnTouchOutside(false);
+                    progressDialog.show();
+
+                    userRegisterDetails();
+
 
 
                 }
             }
 
-
-
         });
+
+    }
+
+    private void userRegisterDetails() {
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+
+        params.put("name",etName.getText().toString());
+        params.put("mobileno",etMobileNumber.getText().toString());
+        params.put("emailid",etEmailID.getText().toString());
+        params.put("username",etUserName.getText().toString());
+        params.put("password",etPassword.getText().toString());
+
+        client.post("http://192.168.1.8:80/CityBusTrackingAPI/userregisterdetails.php",params,
+                new JsonHttpResponseHandler()
+                {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+
+                        try {
+                            String status = response.getString("success");
+                            if (status.equals("1")){
+                                Toast.makeText(RegistrationActivity.this,"Registration Done Successfully",Toast.LENGTH_SHORT).show();
+                                Intent intent=new Intent(RegistrationActivity.this , LoginActivity.class);
+                                startActivity(intent);
+                            }
+                            else {
+                                progressDialog.dismiss();
+                                Toast.makeText(RegistrationActivity.this, "Already",Toast.LENGTH_SHORT).show();
+                            }
+                        }catch (JSONException e){
+                            throw new RuntimeException();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        progressDialog.dismiss();
+                        Toast.makeText(RegistrationActivity.this,"Server Error",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+
+        );
 
     }
 }
