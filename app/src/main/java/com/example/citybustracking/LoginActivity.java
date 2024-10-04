@@ -1,4 +1,5 @@
 package com.example.citybustracking;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,6 +19,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.citybustracking.HomeActivity;
 import com.example.citybustracking.R;
 import com.example.citybustracking.RegistrationActivity;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import cz.msebera.android.httpclient.Header;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -28,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
 
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
+    ProgressDialog progressDialog;
 
 
     @Override
@@ -94,13 +104,60 @@ public class LoginActivity extends AppCompatActivity {
 
                 } else
                 {
-                    Toast.makeText(com.example.citybustracking.LoginActivity.this,"Login Successfully Done", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(com.example.citybustracking.LoginActivity.this, HomeActivity.class);
-                    editor.putString("username",etUsername.getText().toString()).commit();
-                    editor.putBoolean("isLogin",true).commit();
-                    startActivity(intent);
+                    progressDialog = new ProgressDialog(LoginActivity.this);
+                    progressDialog.setTitle("Please Wait..!");
+                    progressDialog.setMessage("Login Under Process");
+                    progressDialog.show();
+                    userLogin();
 
                 }
+            }
+
+            private void userLogin() {
+                AsyncHttpClient client = new AsyncHttpClient();
+                RequestParams params = new RequestParams();
+
+                params.put("username",etUsername.getText().toString());
+                params.put("password",etPassword.getText().toString());
+
+                client.post("http:// 192.168.43.152:80/CityBusAPI/userLogin.php",params,new JsonHttpResponseHandler()
+                        {
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                                super.onSuccess(statusCode, headers, response);
+
+                                try {
+                                    String status = response.getString(Integer.parseInt("success"));
+                                    if (status.equals("1"))
+                                    {
+                                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+
+                                    }
+                                    else
+                                    {
+                                        Toast.makeText(LoginActivity.this,"Invalid Username or Password",Toast.LENGTH_SHORT)
+                                                .show();
+                                    }
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                                super.onFailure(statusCode, headers, responseString, throwable);
+
+                                progressDialog.dismiss();
+
+                                Toast.makeText(LoginActivity.this,"Server Error..!",Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+                        }
+
+                );
             }
         });
         tvSignin.setOnClickListener(new View.OnClickListener() {
