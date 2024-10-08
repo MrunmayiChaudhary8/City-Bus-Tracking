@@ -1,7 +1,9 @@
 package com.example.citybustracking;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.method.HideReturnsTransformationMethod;
@@ -19,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.citybustracking.HomeActivity;
 import com.example.citybustracking.R;
 import com.example.citybustracking.RegistrationActivity;
+import com.example.citybustracking.common.NetworkChangeListener;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -38,6 +41,8 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     ProgressDialog progressDialog;
+
+    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
 
 
     @Override
@@ -113,6 +118,20 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
 
+            @Override
+            protected void onStart(){
+                LoginActivity.super.onStart();
+                 IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+                 registerReceiver(networkChangeListener,filter);
+
+            }
+            @Override
+            protected void onStop(){
+                LoginActivity.super.onStop();
+                unregisterReceiver(networkChangeListener);
+            }
+
+
             private void userLogin() {
                 AsyncHttpClient client = new AsyncHttpClient();
                 RequestParams params = new RequestParams();
@@ -170,3 +189,4 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 }
+
