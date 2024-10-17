@@ -83,10 +83,28 @@
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"/>
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/acbtnLoginSignInWithGoogle"
+                android:layout_width="225dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp"
+                android:background="@drawable/etshape"
+                android:text="Sign In With Google"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:textStyle="italic"
+                android:fontFamily="sans-serif-condensed-medium"
+                />
+
+
+
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="61dp"
+                android:layout_height="65dp"
                 android:orientation="horizontal">
+
+
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -106,10 +124,12 @@
                     android:text="Sign Up"
                     android:textSize="16dp"
                     android:textStyle="bold" />
+
+
+
+
             </LinearLayout>
-
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
 </LinearLayout>
 

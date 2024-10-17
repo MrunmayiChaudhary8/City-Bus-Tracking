@@ -16,12 +16,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.citybustracking.HomeActivity;
 import com.example.citybustracking.R;
 import com.example.citybustracking.RegistrationActivity;
 import com.example.citybustracking.common.NetworkChangeListener;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -41,6 +49,11 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     ProgressDialog progressDialog;
+
+    GoogleSignInOptions googleSignInOptions;
+
+    GoogleSignInClient googleSignInClient;
+    AppCompatButton btnSignInWithGoogle;
 
     NetworkChangeListener networkChangeListener = new NetworkChangeListener();
 
@@ -67,6 +80,19 @@ public class LoginActivity extends AppCompatActivity {
         cbShowHidePassword =findViewById(R.id.cbcheckanduncheckactivity);
         btnLogin = findViewById(R.id.BtnLogin);
         tvSignin = findViewById(R.id.tvSingup);
+        btnSignInWithGoogle = findViewById(R.id.acbtnLoginSignInWithGoogle);
+
+        googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        googleSignInClient = GoogleSignIn.getClient(LoginActivity.this,googleSignInOptions);
+
+        btnSignInWithGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signIn();
+            }
+
+
+        });
 
         cbShowHidePassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -117,7 +143,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
             }
-
             @Override
             protected void onStart(){
                 LoginActivity.super.onStart();
@@ -125,6 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                  registerReceiver(networkChangeListener,filter);
 
             }
+
             @Override
             protected void onStop(){
                 LoginActivity.super.onStop();
@@ -187,6 +213,33 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+    private void signIn() {
+
+        Intent intent = googleSignInClient.getSignInIntent();
+        startActivityForResult(intent,999);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 999)
+        {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+
+            try {
+                task.getResult(ApiException.class);
+                Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+                startActivity(intent);
+                finish();
+
+
+            } catch (ApiException e) {
+                Toast.makeText(this,"Something Went Wrong",Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
 
